@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Checkout example · Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="form-validation.css" rel="stylesheet">
+
+    <script src="jquery-3.4.1.js"></script>
+</head>
+<body class="bg-light">
+<div class="container">
+    <div class="py-5 text-center">
+        <h2>Modify</h2>
+    </div>
+</div>
+<div class="col-md-8 order-md-1">
+    <div>
+        <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="location.href='test.html'">返回</button>
+    </div>
+
+    <form class="needs-validation" novalidate>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label for="author">author</label>
+                <input type="text" class="form-control" id="author" readonly="readonly" required>
+                <label for="category">category</label>
+                <input type="text" class="form-control" id="category" readonly="readonly" required>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="Title">Title</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="title" readonly="readonly" required>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="time">Time</label>
+            <div class="input-group">
+                <input type="text" class="form-control" id="time" readonly="readonly" required>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="link">Link<span class="text-muted"></span></label>
+            <input type="email" class="form-control" id="link" readonly="readonly">
+        </div>
+        <div class="mb-3">
+            <label for="images">images</label>
+            <textarea  type="text" class="form-controli" id="images" readonly="readonly" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="text">text <span class="text-muted"></span></label>
+            <textarea  type="text" class="form-controlt" id="text" readonly="readonly"></textarea>
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="tag">tag</label>
+            <input type="text" class="form-control" id="tag" required>
+        </div>
+        <div class="col-md-3 mb-3">
+            <input type="checkbox" id="display">display
+        </div>
+
+    </form>
+    <div>
+            <button class="btn btn-primary btn-lg btn-block" id="enter" type="submit" >確定</button>
+        </div>
+</div>
+</body>
+
+<script>
+var id;
+    $(function () {
+        var url = window.location.search;
+        var ID = url.substr(4);
+        $.ajax({
+            type: 'get',
+            data: {
+                'id': ID
+            },
+            url: 'https://djangotest1156.herokuapp.com/api/RSS/raw_sql_query',
+            success: function (result) {
+                id = (result[0].id);
+                $("#title").val(result[0].title);
+                $("#time").val(result[0].time);
+                $("#link").val(result[0].link);
+                $("#author").val(result[0].author);
+                $("#text").val(result[0].text);
+                $("#images").val(result[0].images);
+                $("#category").val(result[0].category);
+                $("#tag").val(result[0].tag);
+                if (result[0].display) {
+                    $("#display").attr("checked", "checked");
+                }
+            },
+            error: function () {
+                alert("連接錯誤")
+            }
+        });
+    });
+$("#enter").click(function () {
+  $.ajax({
+      type: 'put',
+      data: {
+          'id':id,
+          'category':$("#category").val(),
+          'tag':$("#tag").val(),
+          'display':$("#display").val(),
+      },
+      url: 'https://djangotest1156.herokuapp.com/api/RSS/update_text/',
+      success:function (result) {
+          alert(result)
+          window.location.href="manage.html?";
+      },
+      error:function () {
+          alert("失敗")
+      }
+  })
+
+})
+
+
+</script>
+</html>
+

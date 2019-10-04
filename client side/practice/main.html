@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>test</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="main.css" rel="stylesheet" type="text/css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+  $(function () {/*API操作和顯示區*/
+        $.ajax({
+            type: 'post',
+            url: ' https://djangotest1156.herokuapp.com/api/RSS/get_info_min/',
+            dataType:'json',
+            data: {
+               'hash':'-127635499069542801',
+               'account':'etaac'
+            },
+            success: function (result) {
+                console.log(result);
+
+                  $.each(result, function(index,element) {
+                      $('.row').append(
+
+                          $('<div class="col-lg-3 title">').append(
+                            $('<p>',
+                            {text:element.title})
+                            ),
+
+                          $('<div class="col-lg-1 source">').append(
+                            $('<p>',
+                            {text:element.source})
+                            ),
+
+                          $('<div class="col-lg-2 category">').append(
+                            $('<p>',
+                            {text:element.category})
+                            ),
+
+                          $('<div class="col-lg-3 tag">').append(
+                            $('<p>',
+                            {text:element.tag})
+                            ),
+
+                          $('<div class="col-lg-1 display">').append(
+                            $('<p>',
+                            {text:element.display})
+                            ),
+
+                          $('<div class="col-lg-1 edit">').append(
+                            $('<input type="button" value="編輯" style="margin:5px;width:50px;height:24px;">')
+                          ),
+
+
+                          $('<div class="col-lg-1 delete">').append(
+                            $('<input type="button" onclick="Delete_Id(this)" value="刪除" style="margin:5px;width:50px;height:24px;">'),
+                            $('<p>',{text: element.id }),
+                          )
+
+
+                        )
+
+                  });
+            },
+            error: function (xhr) {
+                alert(xhr)
+            }
+
+        });
+    })
+
+    function Delete_Id(e) {
+        let str = e.next("p");
+        Delete_Data(str);
+    }
+
+
+
+
+    function Delete_Data(str) {
+
+        $(function () {
+            $.ajax({
+                type: 'delete',
+                url: 'https://djangotest1156.herokuapp.com/api/RSS/delete/',
+                dataType:'json',
+                data: {
+                    'id': str
+            },
+            success: function (result) {
+                console.log(result);
+                alert(result);
+                window.location.reload("Girded_version.html")
+            },
+            error: function (xhr) {
+                alert(xhr)
+            }
+
+        });
+    })
+
+    }
+
+  </script>
+
+</head>
+<body>
+    <h1 align = "center">後臺管理系統</h1>
+
+  <div class="container">
+
+    <div class="row1">
+        <div class="col-lg-3">
+            <h3>標題</h3>
+        </div>
+        <div class="col-lg-1">
+            <h3>來源</h3>
+        </div>
+        <div class="col-lg-2">
+            <h3>類別</h3>
+        </div>
+        <div class="col-lg-3">
+            <h3>TAG</h3>
+        </div>
+        <div class="col-lg-1">
+            <h3>顯示</h3>
+        </div>
+        <div class="col-lg-1">
+            <h3>編輯</h3>
+        </div>
+        <div class="col-lg-1">
+            <h3>刪除</h3>
+        </div>
+    </div>
+
+
+
+    <div class="row">
+
+    </div>
+
+</div>
+
+</body>
+</html>
