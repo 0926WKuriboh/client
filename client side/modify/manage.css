@@ -1,5 +1,18 @@
 body {
-	background-image: url( 'https://onewoodstu.com/wp-content/uploads/2016/05/%E6%8C%87-%E6%A0%93%E6%9C%A8_01-2.jpg' );
+	background-color: rgb(255, 255, 255);
+}
+
+table{
+	border-collapse: collapse;
+	width: 94%;
+	/*自動斷行*/
+	word-wrap: break-word;
+	table-layout: fixed;
+}
+
+.ro{
+	background-color: #e7e5e5;
+
 }
 
 .button{
@@ -15,13 +28,15 @@ body {
 	text-overflow: ellipsis
 }
 .title {
+	width:30%;
 	font-size: 17px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis
 }
 
-.author {
+.source {
+	width:15%;
 	font-size: 17px;
 	overflow: hidden;
 	white-space: nowrap;
@@ -29,6 +44,7 @@ body {
 }
 
 .category {
+	width:20%;
 	font-size: 17px;
 	overflow: hidden;
 	white-space: nowrap;
@@ -36,6 +52,7 @@ body {
 }
 
 .tag {
+	width:15%;
 	font-size: 17px;
 	overflow: hidden;
 	white-space: nowrap;
@@ -43,6 +60,7 @@ body {
 }
 
 .display {
+	width:6%;
 	font-size: 17px;
 	overflow: hidden;
 	white-space: nowrap;
@@ -50,8 +68,11 @@ body {
 }
 
 .delete {
+	width:4%;
 	font-size: 17px;
 }
 .edit {
+	overflow: hidden;
+	width:4%;
 	font-size: 17px;
 }

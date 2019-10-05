@@ -2,37 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-        <link href="bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+        <link href="bootstrap.min.css" rel="stylesheet">
         <script src="jquery-3.4.1.js"></script>
         <link href="floating-labels.css" rel="stylesheet">
 </head>
-<body>
-<form class="form-signin" >
-    <div class="text-center mb-4">
-        <h1 class="h3 mb-3 font-weight-normal">登入</h1>
-    </div>
-    <div class="form-label-group">
-        <label for="inputaccount">Account</label>
-        <input type="text" id="inputaccount" class="form-control_login" required autofocus>
-    </div>
+    <body onkeydown="enter()">
+        <form class="form-signin">
+            <div class="text-center mb-4">
+                <h1 class="h3 mb-3 font-weight-normal">登入</h1>
+            </div>
 
-    <div class="form-label-group">
-        <label for="inputPassword">Password</label>
-        <input  type="password" id="inputPassword" class="form-control_login" placeholder="Password" required>
-    </div>
+            <div>
+                <label for="inputaccount">Account</label>
+                    <input type="text" id="inputaccount" class="form-control_login" required autofocus>
+            </div>
 
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" value="remember-me"> Remember me
-        </label>
-    </div>
-    <button class="btn btn-lg btn-primary btn-block" type="button" id="as">Sign in</button>
-</form>
+            <div>
+                <label for="inputPassword">Password</label>
+                    <input  type="password" id="inputPassword" class="form-control_login"  required>
+            </div>
 
-</body>
+
+            <div class="checkbox mb-3">
+                 <input type="checkbox" value="remember-me"> Remember me
+            </div>
+
+            <div>
+                <button class="btn btn-lg btn-primary btn-block" type="button" id="as">Login</button>
+            </div>
+        </form>
+    </body>
+
 
 <script>
-
     $("#as").click(function () {
         if ($("#inputaccount").val() == "" || $("#inputPassword").val() == ""){
             alert("帳號密碼不可為空！！")
@@ -47,7 +49,7 @@
             },
             success: function (result) {
                 if (result){
-                    window.location.href="manage.html?"+result;
+                    window.location.href="manage.html?"+result+$("#inputaccount").val();
                 }
                 else {
                         alert("登入失敗")
@@ -58,9 +60,34 @@
             }
         });
     });
-
-
+function enter() {
+    if(event.keyCode ==13) {
+            if ($("#inputaccount").val() == "" || $("#inputPassword").val() == "") {
+                alert("帳號密碼不可為空！！")
+                return
+            }
+        $.ajax({
+            type: 'post',
+            url: 'https://djangotest1156.herokuapp.com/api/RSS/login/',
+            data: {
+                "account": $("#inputaccount").val(),
+                "password": $("#inputPassword").val()
+            },
+            success: function (result) {
+                if (result) {
+                    alert(result)
+                    window.location.href = "manage.html?" + result + $("#inputaccount").val();
+                }
+                else {
+                    alert("登入失敗")
+                }
+            },
+            error: function () {
+                alert("連接錯誤")
+            }
+        });
+    }
+}
 </script>
-
 </html>
 

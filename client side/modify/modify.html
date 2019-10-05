@@ -9,7 +9,7 @@
     <title>Checkout example · Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="bootstrap.min.css" rel="stylesheet">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -39,7 +39,7 @@
 </div>
 <div class="col-md-8 order-md-1">
     <div>
-        <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="location.href='test.html'">返回</button>
+        <button class="btn btn-primary btn-lg btn-block" type="submit" onclick=window.location.href="manage.html?";>返回</button>
     </div>
 
     <form class="needs-validation" novalidate>
@@ -85,7 +85,7 @@
 
     </form>
     <div>
-            <button class="btn btn-primary btn-lg btn-block" id="enter" type="submit" >確定</button>
+            <button class="btn btn-primary btn-lg btn-block" id="ok" type="submit" >確定</button>
         </div>
 </div>
 </body>
@@ -94,6 +94,7 @@
 var id;
     $(function () {
         var url = window.location.search;
+        alert(url);
         var ID = url.substr(4);
         $.ajax({
             type: 'get',
@@ -120,7 +121,7 @@ var id;
             }
         });
     });
-$("#enter").click(function () {
+$("#ok").click(function () {
   $.ajax({
       type: 'put',
       data: {
@@ -131,7 +132,6 @@ $("#enter").click(function () {
       },
       url: 'https://djangotest1156.herokuapp.com/api/RSS/update_text/',
       success:function (result) {
-          alert(result)
           window.location.href="manage.html?";
       },
       error:function () {
@@ -140,8 +140,6 @@ $("#enter").click(function () {
   })
 
 })
-
-
 </script>
 </html>
 

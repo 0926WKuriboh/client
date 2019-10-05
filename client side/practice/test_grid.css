@@ -1,6 +1,0 @@
-.grid-container {
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 100px 10px 0.3fr 0.7fr;
-  grid-template-rows: 25% 100px auto;
-}

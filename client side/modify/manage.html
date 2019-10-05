@@ -3,110 +3,129 @@
 <head>
   <title>test</title>
   <meta charset="utf-8">
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <link href="manage.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <h1 align = "center">後臺管理系統</h1>
+    <h1 align = "center">後臺管理系統</h1><br><br>
 
-  <div class="container">
+  <table class="tab" border="1" align="center">
 
-    <div class="row1">
-        <div class="col-lg-3">
-            <h3>標題</h3>
-        </div>
-        <div class="col-lg-1">
-            <h3>來源</h3>
-        </div>
-        <div class="col-lg-2">
-            <h3>類別</h3>
-        </div>
-        <div class="col-lg-3">
-            <h3>TAG</h3>
-        </div>
-        <div class="col-lg-1">
-            <h3>顯示</h3>
-        </div>
-        <div class="col-lg-1">
-            <h3>編輯</h3>
-        </div>
-        <div class="col-lg-1">
-            <h3>刪除</h3>
-        </div>
-    </div>
+    <tr class="ro" >
+        <th width=30%>
+            標題
+        </th>
 
-    <div class="row">
-    </div>
-</div>
+        <th width=15%>
+            來源
+        </th>
+
+        <th width=20%>
+            類別
+        </th>
+
+        <th width=15%>
+            TAG
+        </th>
+
+        <th width=6%>
+            顯示
+        </th>
+
+        <th width=4%>
+            編輯
+        </th>
+
+        <th width=4%>
+            刪除
+        </th>
+    </tr>
+
+  </table>
     <script src="jquery-3.4.1.js"></script>
     <script>
 
   $(function () {/*API操作和顯示區*/
-        var hash_local;
+        var final_hash;
+        var user_name;
+        var local_hash;
         var url = window.location.search;
         var hash = url.substr(1);
         if (hash != ""){
-            localStorage.user= hash;
-            hash_local = localStorage.user;
-            alert(hash_local)
+            if(hash.substr(0,10) < 0){
+                localStorage.user= hash;
+                local_hash = localStorage.user;
+                final_hash = local_hash.substr(0,20);
+                user_name = local_hash.substr(20);
+            }else {
+                localStorage.user= hash;
+                local_hash = localStorage.user;
+                final_hash = local_hash.substr(0,19);
+                user_name = local_hash.substr(19);
+            }
         }
         else {
-            hash_local = localStorage.user;
-            alert(hash_local)
+            local_hash = localStorage.user;
+            if(local_hash.substr(0,10) < 0){
+                final_hash = local_hash.substr(0,20);
+                user_name = local_hash.substr(20);
+            }else {
+                final_hash = local_hash.substr(0,19);
+                user_name = local_hash.substr(19);
+            }
         }
-
 
         $.ajax({
             type: 'post',
             url: ' https://djangotest1156.herokuapp.com/api/RSS/get_info_min/',
             dataType:'json',
             data: {
-               'hash': hash_local ,
-               'account':'etaac'
+               'hash':      final_hash ,
+               'account':   user_name,
             },
             success: function (result) {
                 console.log(result);
                   $.each(result, function(index,element) {
-                      $('.row').append(
+                      $('.tab').append(
+                        $('<tr style>').append(
 
-                          $('<div class="col-lg-3 title">').append(
+                          $('<td class="title">').append(
                             $('<p>',
                             {text:element.title})
                             ),
 
-                          $('<div class="col-lg-1 source">').append(
+                          $('<td class="source">').append(
                             $('<p>',
                             {text:element.source})
                             ),
 
-                          $('<div class="col-lg-2 category">').append(
+                          $('<td class="category">').append(
                             $('<p>',
                             {text:element.category})
                             ),
 
-                          $('<div class="col-lg-3 tag">').append(
+                          $('<td class="tag">').append(
                             $('<p>',
                             {text:element.tag})
                             ),
 
-                          $('<div class="col-lg-1 display">').append(
+                          $('<td class="display">').append(
                             $('<p>',
                             {text:element.display})
                             ),
 
-                          $('<div class="col-lg-1 edit">').append(
-                            $('<input type="button" onclick="Edit_Id(this)" value="編輯" style="margin:5px;width:50px;height:24px;">'),
-                            $('<p>',{text: element.id })
+                          $('<td class="edit">').append(
+                            $('<input type="button" onclick="Edit_Id(this)" value="編輯"  style="margin:5px;width:50px;height:24px;">'),
+                              $('<p>',{text: element.id })
                           ),
 
 
-                          $('<div class="col-lg-1 delete">').append(
+                          $('<td class="delete">').append(
                             $('<input type="button" onclick="Delete_Id(this)" value="刪除" style="margin:5px;width:50px;height:24px;">'),
-                            $('<p>',{text: element.id })
+                            $('<p visibility:hidden>',{text: element.id })
                           )
 
-
                         )
+                      )
 
                   });
             },
