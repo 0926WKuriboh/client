@@ -75,53 +75,52 @@
         }
 
         $.ajax({
-            type: 'post',
-            url: ' https://djangotest1156.herokuapp.com/api/RSS/get_info_min/',
-            dataType:'json',
+            type: 'get',
+            url: ' https://djangotest1156.herokuapp.com/api/RSS/get_info_for_page/',
             data: {
-               'hash':      final_hash ,
-               'account':   user_name,
+                "page": "1",
+                "source":"viablog",
             },
             success: function (result) {
                 console.log(result);
-                  $.each(result, function(index,element) {
+                  $.each(result[0], function(index,element) {
                       $('.tab').append(
                         $('<tr style>').append(
 
                           $('<td class="title">').append(
                             $('<p>',
-                            {text:element.title})
+                            {text:element[1]})
                             ),
 
                           $('<td class="source">').append(
                             $('<p>',
-                            {text:element.source})
+                            {text:element[2]})
                             ),
 
                           $('<td class="category">').append(
                             $('<p>',
-                            {text:element.category})
+                            {text:element[3]})
                             ),
 
                           $('<td class="tag">').append(
                             $('<p>',
-                            {text:element.tag})
+                            {text:element[4]})
                             ),
 
                           $('<td class="display">').append(
                             $('<p>',
-                            {text:element.display})
+                            {text:element[5]})
                             ),
 
                           $('<td class="edit">').append(
                             $('<input type="button" onclick="Edit_Id(this)" value="編輯"  style="margin:5px;width:50px;height:24px;">'),
-                              $('<p>',{text: element.id })
+                              $('<p display:none>',{text: element[0] })
                           ),
 
 
                           $('<td class="delete">').append(
                             $('<input type="button" onclick="Delete_Id(this)" value="刪除" style="margin:5px;width:50px;height:24px;">'),
-                            $('<p visibility:hidden>',{text: element.id })
+                            $('<p visibility:hidden>',{text: element[0] })
                           )
 
                         )
