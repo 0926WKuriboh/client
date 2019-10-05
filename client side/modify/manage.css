@@ -72,7 +72,7 @@ table{
 	font-size: 17px;
 }
 .edit {
-	overflow: hidden;
 	width:4%;
 	font-size: 17px;
+	overflow:visible;
 }
