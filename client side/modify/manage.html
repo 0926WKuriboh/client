@@ -16,6 +16,15 @@
 
 <body>
   <h1 align="center">後臺管理系統</h1><br><br>
+  <form align="center">
+    First name:
+        <div onkeydown="enter_search_text()">
+    <input type="text" id="search_target">
+        </div>
+    <input type="button" value="搜尋" onclick="search_text(this)">
+
+    <input type="button" value="回首頁" onclick="reload()">
+  </form><br>
 
   <table class="tab" id="tab" border="1" align="center">
 
@@ -44,7 +53,6 @@
 
       </th>
 
-
     </tr>
 
   </table>
@@ -57,13 +65,14 @@
       </p>
     </tr>
   </table>
-
   <script src="jquery-3.4.1.js"></script>
+
   <script>
-    var table_color_swich = 1;
-    var page = 1;
-    var all_page;
-    $(function () {/*API操作和顯示區*/
+      var table_color_swich = 1;
+      var page = 1;
+      var all_page;
+      var source_data;
+      source_data = "yumingui";
       var final_hash;
       var user_name;
       var local_hash;
@@ -83,7 +92,7 @@
         }
       }
       else {
-        local_hash = localStorage.user;
+          local_hash = localStorage.user;
         if (local_hash.substr(0, 10) < 0) {
           final_hash = local_hash.substr(0, 20);
           user_name = local_hash.substr(20);
@@ -92,12 +101,15 @@
           user_name = local_hash.substr(19);
         }
       }
-
+    $(function () {/*API操作和顯示區*/
+      var source_text;
+      source_text = source_data;
       $.ajax({
-        type: 'get',
-        url: ' https://djangotest1156.herokuapp.com/api/RSS/get_info_for_page/',
+        type: 'post',
+        url: "https://djangotest1156.herokuapp.com/api/RSS/get_info_for_page/"+"?page=1&source="+source_text,
         data: {
-          "page": "1",
+          "login_hash": final_hash,
+          "account": user_name,
         },
         success: function (result) {
           console.log(result);
@@ -108,9 +120,8 @@
         error: function () {
           alert("錯誤")
         }
-
       });
-    });
+    })
 
     function append_table(data) {
       $('.tab').append(
@@ -153,13 +164,15 @@
       )
       $("td.edit").children("p").css("display", "none");
     }
-
     function call_data(num) {
+        var source_call;
+        source_call = source_data;
         $.ajax({
-        type: 'get',
-        url: ' https://djangotest1156.herokuapp.com/api/RSS/get_info_for_page/',
+        type: 'post',
+        url: ' https://djangotest1156.herokuapp.com/api/RSS/get_info_for_page/'+"?page="+ num +"&source="+source_call,
         data: {
-          "page": num,
+          "login_hash": final_hash,
+          "account": user_name,
         },
         success: function(result) {
           console.log(result);
@@ -175,7 +188,6 @@
       });
 
     }
-
     function next_clear_table(){
         if(page != all_page+1) {
           var ntpage;
@@ -185,6 +197,43 @@
           call_data(ntpage);
       }
     }
+
+
+      function search_text(e) {
+
+      let se_ta = document.getElementById("search_target");
+      console.log(se_ta);
+      var text = se_ta.value;
+      console.log(text);
+      search(text);
+    }
+      function clear_table() {
+      $("#tab tr:not(:first)").html("");
+    }
+      function search(target) {
+          var xxx;
+          xxx = target;
+          alert(xxx);
+          $.ajax({
+            type: 'get',
+            url: 'https://djangotest1156.herokuapp.com/api/RSS/search_data/',
+            data: {
+              "title":xxx ,
+            },
+              success: function (result) {
+              clear_table();
+              $.each(result, function (index, element) {
+                append_table(element);
+              });
+              $("button").css("display", "none");
+            },
+              error: function () {
+            alert("錯誤")
+          }
+
+        });
+    }
+    <!--- -------------------------->
 
     function before_clear_table(){
       if(page != 1){
