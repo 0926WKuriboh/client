@@ -3,12 +3,15 @@ body {
 	font-family:"Microsoft JhengHei";
 }
 
-.tab{
+table{
 	background-color: rgb(255, 255, 255);
 	border-collapse: collapse;
-	width: 84%;
+	width: 98%;
 	word-wrap: break-word;
 	table-layout: fixed;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis
 }
 
 .source_filter{
@@ -24,6 +27,12 @@ body {
 
 }
 
+p{
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
 h6{
 	color:white;
 	margin:0px 0px 0px 0px;
@@ -36,41 +45,46 @@ h6{
 }
 
 .id {
+	padding: 10px;
 	font-size: 17px;
 	overflow: hidden;
 	white-space: nowrap;
-	text-overflow: ellipsis
+	text-overflow: ellipsis;
 }
 .title {
-	width:30%;
+	padding: 10px;
+	width:35%;
 	font-size: 17px;
 	overflow: hidden;
 	white-space: nowrap;
-	text-overflow: ellipsis
+	text-overflow: ellipsis;
 }
 
 .source {
+	padding: 10px;
 	width:10%;
 	font-size: 17px;
 	overflow: hidden;
 	white-space: nowrap;
-	text-overflow: ellipsis
+	text-overflow: ellipsis;
 }
 
 .category {
-	width:15%;
+	padding: 10px;
+	width:20%;
 	font-size: 17px;
 	overflow: hidden;
 	white-space: nowrap;
-	text-overflow: ellipsis
+	text-overflow: ellipsis;
 }
 
 .tag {
+	padding: 10px;
 	width:15%;
 	font-size: 17px;
 	overflow: hidden;
 	white-space: nowrap;
-	text-overflow: ellipsis
+	text-overflow: ellipsis;
 }
 
 .display {
@@ -82,14 +96,13 @@ h6{
 }
 
 .delete {
-	width:4%;
 	font-size: 17px;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
 .edit {
-	width:4%;
+	width:7%;
 	font-size: 17px;
 	overflow: hidden;
 	white-space: nowrap;
