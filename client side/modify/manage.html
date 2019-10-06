@@ -211,14 +211,12 @@
       $("#tab tr:not(:first)").html("");
     }
       function search(target) {
-          var xxx;
-          xxx = target;
-          alert(xxx);
           $.ajax({
-            type: 'get',
-            url: 'https://djangotest1156.herokuapp.com/api/RSS/search_data/',
+            type: 'post',
+            url: 'https://djangotest1156.herokuapp.com/api/RSS/search_data/'+"?title=" + target,
             data: {
-              "title":xxx ,
+                "login_hash": final_hash,
+                "account": user_name,
             },
               success: function (result) {
               clear_table();
@@ -230,7 +228,6 @@
               error: function () {
             alert("錯誤")
           }
-
         });
     }
     <!--- -------------------------->
