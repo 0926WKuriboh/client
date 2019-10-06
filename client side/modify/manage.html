@@ -2,351 +2,365 @@
 <html>
 
 <head>
-  <title>test</title>
-  <meta charset="utf-8">
-  <link href="manage.css" rel="stylesheet" type="text/css" />
+    <title>test</title>
+    <meta charset="utf-8">
+    <link href="manage.css" rel="stylesheet" type="text/css"/>
+    <link href="bootstrap.min.css" rel="stylesheet" type="text/css"/>
 </head>
 
-  <style>
-    .tab tr:nth-child(odd) {background: rgb(238, 238, 238)}
-    .tab tr:nth-child(even) {background: #FFF}
-    .tab tr:hover {background-color: rgb(211, 211, 211);}
-  </style>
+<style>
+    .tab tr:nth-child(odd) {
+        background: rgb(238, 238, 238)
+    }
+    .tab tr:nth-child(even) {
+        background: #FFF
+    }
+    .tab tr:hover {
+        background-color: rgb(211, 211, 211);
+    }
+    body {
+        font-family: "Microsoft JhengHei UI",cursive;
+    }
+    .navbar-brand {
+        font-size: xx-large;
+    }
+</style>
 
 <body>
-  <div>
-      <div style="display:inline;"><a href="manage.html"><font size="6"> 後臺管理系統 </font></a></div>
-      <div style="float:right;" style="display:inline;" id="account_text">
-      </div><br>
-      <div style="float:right;" style="display:inline;">
-      <a href="login.html"><font size="4">登出</font></a>
-      </div>
+    <nav class="navbar ">
+        <a class="navbar-brand" href="manage.html">後臺管理系統</a>
+        <!--        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"-->
+        <!--                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+        <!--            <span class="navbar-toggler-icon"></span>-->
+        <!--        </button>-->
 
-  <form>
-        <div onkeydown="enter_search_text()">
-            <br><br>
-            <input type="text" id="search_target">
-            <input type="button" value="搜尋" onclick="search_text()">
+        <div class="mamber">
+            <p id="account">asd</p>
+
+            <a id="logout" href="login.html" onclick=log_out()>登出</a>
         </div>
-  </form><br>
-</div>
-  <table class="tab" id="tab" border="1" align="center">
 
-    <tr class="ro">
-      <th width=30%>
-        標題
-      </th>
+    </nav>
 
-      <th width=10%>
-          <select id="source_filter" onChange="change_source_data()">
-            <option value="">來源</option>
-          </select>
-      </th>
+    <nav class="left-bar">
+        <ul>
+            <li>
+                <a href="">網頁管理</a>
+            </li>
+            <li>
+                <a href="">來源管理</a>
+            </li>
+        </ul>
+    </nav>
 
-      <th width=15%>
-        類別
-      </th>
+    <div class="text">
+        <div class="search-bar">
+            <div onkeydown="enter_search_text()">
+                <input type="text" id="search_target" placeholder="輸入關鍵字">
+                <input type="button" value="搜尋" onclick="search_text()">
+            </div>
+        </div>
 
-      <th width=15%>
-        TAG
-      </th>
+        <table class="tab" id="tab" border="1" align="center">
 
-      <th width=6% class="display_filter">
-        顯示
-      </th>
+            <tr class="ro">
+                <th width=30%>
+                    標題
+                </th>
 
-      <th width=8% colspan="2">
+                <th width=10%>
+                    <select id="source_filter" onChange="change_source_data()">
+                        <option value="">來源</option>
+                    </select>
+                </th>
 
-      </th>
+                <th width=15%>
+                    類別
+                </th>
 
-    </tr>
+                <th width=15%>
+                    TAG
+                </th>
 
-  </table>
+                <th width=6% class="display_filter">
+                    顯示
+                </th>
 
-  <table>
-    <tr>
-      <p align="center">
-        <input type="button" onclick="before_clear_table()" id="leftButton" value="before"></input>
-        <input type="button" onclick="next_clear_table()" id="rightButton" value="next"></input>
-      </p>
-    </tr>
-  </table>
-  <script src="jquery-3.4.1.js"></script>
+                <th width=8% colspan="2">
 
-  <script>
+                </th>
 
-      var table_color_swich = 1;
-      var page = parseInt(localStorage.getItem("record_page"));
-      if(page == null){
+            </tr>
+
+        </table>
+
+        <table>
+            <tr>
+                <p align="center">
+                    <input type="button" onclick="before_clear_table()" id="leftButton" value="before" ></input>
+                    <input type="button" onclick="next_clear_table()" id="rightButton" value="next" ></input>
+                </p>
+            </tr>
+        </table>
+    </div>
+
+</body>
+
+
+<script src="jquery-3.4.1.js"></script>
+
+<script>
+    var test_page = localStorage.getItem("record_page");
+    if (test_page == null) {
         page = 1;
-      }
-      var source_data = localStorage.getItem("record_source");
-      if(source_data == null){
-        source_data="";
-      }
-      var all_page;
-      var final_hash;
-      var user_name;
-      var local_hash;
-      var url = window.location.search;
-      var hash = url.substr(1);
-      if (hash != "") {
+    }else{
+       page = parseInt(localStorage.getItem("record_page"));
+    }
+    var source_data = localStorage.getItem("record_source");
+    if (source_data == null) {
+        source_data = "";
+    }
+    var all_page;
+    var final_hash;
+    var user_name;
+    var local_hash;
+    var url = window.location.search;
+    var hash = url.substr(1);
+    if (hash != "") {
         if (hash.substr(0, 10) < 0) {
-          localStorage.user = hash;
-          local_hash = localStorage.user;
-          final_hash = local_hash.substr(0, 20);
-          user_name = local_hash.substr(20);
-          document.getElementById("account_text").innerHTML = "account:"+user_name;
+            localStorage.user = hash;
+            local_hash = localStorage.user;
+            final_hash = local_hash.substr(0, 20);
+            user_name = local_hash.substr(20);
+            document.getElementById("account").innerHTML = user_name;
         } else {
-          localStorage.user = hash;
-          local_hash = localStorage.user;
-          final_hash = local_hash.substr(0, 19);
-          user_name = local_hash.substr(19);
-          document.getElementById("account_text").innerHTML = "account:"+user_name;
+            localStorage.user = hash;
+            local_hash = localStorage.user;
+            final_hash = local_hash.substr(0, 19);
+            user_name = local_hash.substr(19);
+            document.getElementById("account").innerHTML = user_name;
         }
-      }
-      else {
-          local_hash = localStorage.user;
+    } else {
+        local_hash = localStorage.user;
         if (local_hash.substr(0, 10) < 0) {
-          final_hash = local_hash.substr(0, 20);
-          user_name = local_hash.substr(20);
-          document.getElementById("account_text").innerHTML = "account:"+user_name;
+            final_hash = local_hash.substr(0, 20);
+            user_name = local_hash.substr(20);
+            document.getElementById("account").innerHTML = user_name;
         } else {
-          final_hash = local_hash.substr(0, 19);
-          user_name = local_hash.substr(19);
-          document.getElementById("account_text").innerHTML = "account:"+user_name;
+            final_hash = local_hash.substr(0, 19);
+            user_name = local_hash.substr(19);
+            document.getElementById("account").innerHTML = user_name;
         }
-      }
+    }
     $(function () {/*API操作和顯示區*/<!--- 初始 -->
-      var source_text;
-      source_text = source_data;
-      $.ajax({
-        type: 'get',
-        url: "https://djangotest1156.herokuapp.com/api/RSS/get_source/",
-        success: function (result) {
-            append_dropdown(result);
-        }
-      })
-      $.ajax({
-        type: 'post',
-        url: "https://djangotest1156.herokuapp.com/api/RSS/get_info_for_page/"+"?page="+page+"&source="+source_text,
-        data: {
-          "login_hash": final_hash,
-          "account": user_name,
-        },
-        success: function (result) {
-            all_page = Math.ceil(result[1] / 20);
-            alert(page);
-            alert(all_page);
-          $.each(result[0], function (index, element) {
-            append_table(element);
-          });
-        },
-        error: function () {
-          alert("錯誤")
-        }
-      });
-    })
-
-      function change_source() {/*API操作和顯示區*/<!--- 初始 -->
-      var source_text;
-      source_text = source_data;
-      clear_table();
-      $.ajax({
-        type: 'post',
-        url: "https://djangotest1156.herokuapp.com/api/RSS/get_info_for_page/"+"?page=1"+"&source="+source_text,
-        data: {
-          "login_hash": final_hash,
-          "account": user_name,
-        },
-        success: function (result) {
-          all_page = Math.ceil(result[1]/20);
-          $.each(result[0], function (index, element) {
-            append_table(element);
-          });
-        },
-        error: function () {
-          alert("錯誤")
-        }
-      });
-    }
-      function change_source_data() {
-      source_data =  $("#source_filter").val();
-      page = 1;
-            change_source();
-    }
-
-      function append_table(data) {
-      $('.tab').append(
-        $('<tr>').append(
-
-          $('<td class="title">').append(
-            $('<p>',
-              { text:data[1] })
-          ),
-
-
-          $('<td class="source">').append(
-            $('<p>',
-              { text: data[2] })
-          ),
-
-          $('<td class="category">').append(
-            $('<p>',
-              { text: data[3] })
-          ),
-
-          $('<td class="tag">').append(
-            $('<p>',
-              { text: data[4] })
-          ),
-
-          $('<td class="display">').append(
-            $('<p>',
-              { text: data[5] })
-          ),
-
-          $('<td colspan="2" class="edit">').append(
-            $('<input type="button" onclick="Edit_Id(this)" value="編輯"  style="margin:5px;width:50px;height:50px;">'),
-            $('<p>', { text: data[0] }),
-            $('<input type="button" onclick="Delete_Id(this)" value="刪除" style="margin:5px;width:50px;height:50px;">'),
-            $('<p>', { text: data[0] })
-          )
-        )
-
-      )
-      $("td.edit").children("p").css("display", "none");
-    }
-      function call_data(num) {
-        alert(source_data);
-          alert(page);
-        var source_call;
-        source_call = source_data;
+        var source_text;
+        source_text = source_data;
         $.ajax({
-        type: 'post',
-        url: ' https://djangotest1156.herokuapp.com/api/RSS/get_info_for_page/'+"?page="+ num +"&source="+source_call,
-        data: {
-          "login_hash": final_hash,
-          "account": user_name,
-        },
-        success: function(result) {
-          $.each(result[0], function (index, element){
-            append_table(element);
-          });
-        },
-        error: function () {
-          alert("錯誤")
-        }
-      });
-    }
-      function next_clear_table(){
-        if(page <= all_page-0.5) {
-          var ntpage = 0;
-          ntpage = page + 1;
-          page = ntpage;
-          $("#tab tr:not(:first)").html("");
-          call_data(ntpage);
-      }
-    }
-      function before_clear_table(){
-      if(page != 1){
-        var bfpage;
-        bfpage = page - 1;
-        page = bfpage;
-        $("#tab tr:not(:first)").html("");
-        call_data(bfpage);
-      }
-    }
-      function enter_search_text(){
-      if (event.keyCode == 13) {
-         search_text();
-     }
-    }
-
-
-      function search_text() {
-
-      let se_ta = document.getElementById("search_target");
-      console.log(se_ta);
-      var text = se_ta.value;
-      console.log(text);
-      search(text);
-    }
-      function clear_table() {
-      $("#tab tr:not(:first)").html("");
-    }
-      function search(target) {
-          $.ajax({
+            type: 'get',
+            url: "https://djangotest1156.herokuapp.com/api/RSS/get_source/",
+            success: function (result) {
+                append_dropdown(result);
+            }
+        });
+        console.log(page, source_text);
+        $.ajax({
             type: 'post',
-            url: 'https://djangotest1156.herokuapp.com/api/RSS/search_data/'+"?title=" + target,
+            url: "https://djangotest1156.herokuapp.com/api/RSS/get_info_for_page/" + "?page=" + page + "&source=" + source_text,
             data: {
                 "login_hash": final_hash,
                 "account": user_name,
             },
-              success: function (result) {
-              clear_table();
-              $.each(result, function (index, element) {
-                append_table(element);
-              });
-              $("button").css("display", "none");
+            success: function (result) {
+                all_page = Math.ceil(result[1] / 20);
+                $.each(result[0], function (index, element) {
+                    append_table(element);
+                });
             },
-              error: function () {
-            alert("錯誤")
-          }
+            error: function () {
+                alert("錯誤")
+            }
         });
-    }
-
-    function append_dropdown(data) {
-        for (var i = 0;i < data.length;i++){
-          $('#source_filter').append(
-                  $('<option ></option>',
-                     {text:data[i]})
-                  )
+    });
+    function enter_search_text() {
+        if (event.keyCode == 13) {
+            search_text();
         }
     }
-
-    function Edit_Id(e) {
-      let EdId = e.nextSibling;
-      var EID = EdId.innerHTML;
-      console.log(EID);
-      localStorage.setItem("record_page",page);
-      localStorage.setItem("record_source",source_data);
-      window.location.href = "modify.html" + "?" + "id=" + EID;
-    }
-
-    function Delete_Id(e) {
-      let DeId = e.nextSibling;
-      var DID = DeId.innerHTML;
-      Delete_Data(DID);
-    }
-
-    function Delete_Data(DID) {
-      console.log(DID);
-      console.log('asd');
-      $(function () {
-        console.log(DID);
+    function change_source() {/*API操作和顯示區*/<!--- 初始 -->
+        var source_text;
+        source_text = source_data;
+        clear_table();
         $.ajax({
-          type: 'delete',
-          url: 'https://djangotest1156.herokuapp.com/api/RSS/delete/',
-          dataType: 'json',
-          data: {
-            'id': DID
-          },
-          success: function (result) {
-            console.log(result);
-            alert(result);
-            window.location.reload()
-          },
-          error: function (xhr) {
-            alert(xhr)
-          }
-
+            type: 'post',
+            url: "https://djangotest1156.herokuapp.com/api/RSS/get_info_for_page/" + "?page=1&source=" + source_text,
+            data: {
+                "login_hash": final_hash,
+                "account": user_name,
+            },
+            success: function (result) {
+                all_page = Math.ceil(result[1] / 20);
+                $.each(result[0], function (index, element) {
+                    append_table(element);
+                });
+            },
+            error: function () {
+                alert("錯誤")
+            }
         });
-
-      })
     }
-  </script>
-
-</body>
-
+    function change_source_data() {
+        source_data = $("#source_filter").val();
+        page = 1;
+        change_source();
+    }
+    function append_table(data) {
+        $('.tab').append(
+            $('<tr>').append(
+                $('<td class="title">').append(
+                    $('<p>',
+                        {text: data[1]})
+                ),
+                $('<td class="source">').append(
+                    $('<p>',
+                        {text: data[2]})
+                ),
+                $('<td class="category">').append(
+                    $('<p>',
+                        {text: data[3].replace('{', '').replace('}', '')})
+                ),
+                $('<td class="tag">').append(
+                    $('<p>',
+                        {text: data[4]})
+                ),
+                $('<td class="display">').append(
+                    $('<p>',
+                        {text: data[5]})
+                ),
+                $('<td colspan="2" class="edit">').append(
+                    $('<input type="button" onclick="Edit_Id(this)" value="編輯" style="margin:5%;width:40%;height:100%; float: left">'),
+                    $('<p>', {text: data[0]}),
+                    $('<input type="button" onclick="Delete_Id(this)" value="刪除" style="margin:5%;width:40%;height:100%; float: right">'),
+                    $('<p>', {text: data[0]})
+                )
+            )
+        );
+        $("td.edit").children("p").css("display", "none");
+    }
+    function call_data(num) {
+        var source_call;
+        source_call = source_data;
+        $.ajax({
+            type: 'post',
+            url: ' https://djangotest1156.herokuapp.com/api/RSS/get_info_for_page/' + "?page=" + num + "&source=" + source_call,
+            data: {
+                "login_hash": final_hash,
+                "account": user_name,
+            },
+            success: function (result) {
+                $.each(result[0], function (index, element) {
+                    append_table(element);
+                });
+                $('html,body').animate({ scrollTop: 0 }, 0);
+            },
+            error: function () {
+                alert("錯誤")
+            }
+        });
+    }
+    function next_clear_table() {
+        if (page <= all_page - 0.5) {
+            var ntpage = 0;
+            ntpage = page + 1;
+            page = ntpage;
+            $("#tab tr:not(:first)").html("");
+            call_data(ntpage);
+        }
+    }
+    function before_clear_table() {
+        if (page != 1) {
+            var bfpage;
+            bfpage = page - 1;
+            page = bfpage;
+            $("#tab tr:not(:first)").html("");
+            call_data(bfpage);
+        }
+    }
+    function search_text() {
+        let se_ta = document.getElementById("search_target");
+        console.log(se_ta);
+        var text = se_ta.value;
+        console.log(text);
+        search(text);
+    }
+    function clear_table() {
+        $("#tab tr:not(:first)").html("");
+    }
+    function search(target) {
+        $.ajax({
+            type: 'post',
+            url: 'https://djangotest1156.herokuapp.com/api/RSS/search_data/' + "?title=" + target,
+            data: {
+                "login_hash": final_hash,
+                "account": user_name,
+            },
+            success: function (result) {
+                clear_table();
+                $.each(result, function (index, element) {
+                    append_table(element);
+                });
+                $("button").css("display", "none");
+            },
+            error: function () {
+                alert("錯誤")
+            }
+        });
+    }
+    function append_dropdown(data) {
+        for (var i = 0; i < data.length; i++) {
+            $('#source_filter').append(
+                $('<option ></option>',
+                    {text: data[i]})
+            )
+        }
+    }
+    function Edit_Id(e) {
+        let EdId = e.nextSibling;
+        var EID = EdId.innerHTML;
+        console.log(EID);
+        localStorage.setItem("record_page", page);
+        localStorage.setItem("record_source", source_data);
+        window.location.href = "modify.html" + "?" + "id=" + EID;
+    }
+    function Delete_Id(e) {
+        let DeId = e.nextSibling;
+        var DID = DeId.innerHTML;
+        Delete_Data(DID);
+    }
+    function Delete_Data(DID) {
+        console.log(DID);
+        console.log('asd');
+        $(function () {
+            console.log(DID);
+            $.ajax({
+                type: 'delete',
+                url: 'https://djangotest1156.herokuapp.com/api/RSS/delete/',
+                dataType: 'json',
+                data: {
+                    'id': DID
+                },
+                success: function (result) {
+                    console.log(result);
+                    alert(result);
+                    window.location.reload()
+                },
+                error: function (xhr) {
+                    alert(xhr)
+                }
+            });
+        })
+    }
+    function log_out() {
+        localStorage.clear();
+    }
+</script>
 </html>
