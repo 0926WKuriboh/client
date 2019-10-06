@@ -23,7 +23,7 @@
             </div>
 
             <div class="checkbox mb-3">
-                 <input type="checkbox" value="remember-me"> Remember me
+                 <input type="checkbox" id="remeber" value="remember-me"> Remember me
             </div>
 
             <div>
@@ -33,6 +33,11 @@
     </body>
 
 <script>
+    var remeber_account;
+    var remeber_account_text;
+    remeber_account = document.cookie;
+    remeber_account_text = remeber_account.substr(5);
+    $("#inputaccount").val(remeber_account_text);
     $("#as").click(function () {
         if ($("#inputaccount").val() == "" || $("#inputPassword").val() == ""){
             alert("帳號密碼不可為空！！")
@@ -47,7 +52,14 @@
             },
             success: function (result) {
                 if (result){
-                    window.location.href="manage.html?"+result+$("#inputaccount").val();
+                    if($("#remeber").prop("checked")){
+                        document.cookie = "user="+$("#inputaccount").val();
+                        window.location.href="manage.html?"+result+$("#inputaccount").val();
+                    }else{
+                        document.cookie = "user="+""
+                        window.location.href="manage.html?"+result+$("#inputaccount").val();
+                    }
+
                 }
                 else {
                         alert("登入失敗")
@@ -73,7 +85,13 @@ function enter() {
             },
             success: function (result) {
                 if (result) {
-                    window.location.href = "manage.html?" + result + $("#inputaccount").val();
+                    if($("#remeber").prop("checked")){
+                        document.cookie = "user="+$("#inputaccount").val();
+                        window.location.href="manage.html?"+result+$("#inputaccount").val();
+                    }else{
+                        document.cookie = "user="+""
+                        window.location.href="manage.html?"+result+$("#inputaccount").val();
+                    }
                 }
                 else {
                     alert("登入失敗")

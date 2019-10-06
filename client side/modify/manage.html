@@ -168,7 +168,7 @@
             change_source();
     }
 
-    function append_table(data) {
+      function append_table(data) {
       $('.tab').append(
         $('<tr>').append(
 
@@ -209,7 +209,7 @@
       )
       $("td.edit").children("p").css("display", "none");
     }
-    function call_data(num) {
+      function call_data(num) {
         var source_call;
         source_call = source_data;
         $.ajax({
@@ -229,7 +229,7 @@
         }
       });
     }
-    function next_clear_table(){
+      function next_clear_table(){
         if(page <= all_page-0.5) {
           var ntpage;
           ntpage = page + 1;
@@ -238,7 +238,7 @@
           call_data(ntpage);
       }
     }
-    function before_clear_table(){
+      function before_clear_table(){
       if(page != 1){
         var bfpage;
         bfpage = page - 1;
@@ -247,8 +247,7 @@
         call_data(bfpage);
       }
     }
-
-    function enter_search_text(){
+      function enter_search_text(){
       if (event.keyCode == 13) {
          search_text();
      }
