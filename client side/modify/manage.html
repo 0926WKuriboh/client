@@ -7,23 +7,20 @@
   <link href="manage.css" rel="stylesheet" type="text/css" />
 </head>
 
-<style>
+  <style>
     .tab tr:nth-child(odd) {background: rgb(238, 238, 238)}
     .tab tr:nth-child(even) {background: #FFF}
     .tab tr:hover {background-color: rgb(211, 211, 211);}
-
- </style>
+  </style>
 
 <body>
-  <h1 align="center">後臺管理系統</h1><br><br>
+<div style="display:inline;"><a href="manage.html"><font size="6"> 後臺管理系統 </font></a></div>
+    <div style="float:right;" style="display:inline;" id="account_text"></div>
   <form align="center">
-    First name:
         <div onkeydown="enter_search_text()">
-    <input type="text" id="search_target">
+            <input type="text" id="search_target">
         </div>
     <input type="button" value="搜尋" onclick="search_text(this)">
-
-    <input type="button" value="回首頁" onclick="reload()">
   </form><br>
 
   <table class="tab" id="tab" border="1" align="center">
@@ -72,7 +69,7 @@
       var page = 1;
       var all_page;
       var source_data;
-      source_data = "yumingui";
+      source_data = "";
       var final_hash;
       var user_name;
       var local_hash;
@@ -84,11 +81,13 @@
           local_hash = localStorage.user;
           final_hash = local_hash.substr(0, 20);
           user_name = local_hash.substr(20);
+          document.getElementById("account_text").innerHTML = "account:"+user_name;
         } else {
           localStorage.user = hash;
           local_hash = localStorage.user;
           final_hash = local_hash.substr(0, 19);
           user_name = local_hash.substr(19);
+          document.getElementById("account_text").innerHTML = "account:"+user_name;
         }
       }
       else {
@@ -96,9 +95,11 @@
         if (local_hash.substr(0, 10) < 0) {
           final_hash = local_hash.substr(0, 20);
           user_name = local_hash.substr(20);
+          document.getElementById("account_text").innerHTML = "account:"+user_name;
         } else {
           final_hash = local_hash.substr(0, 19);
           user_name = local_hash.substr(19);
+          document.getElementById("account_text").innerHTML = "account:"+user_name;
         }
       }
     $(function () {/*API操作和顯示區*/
