@@ -14,8 +14,9 @@
   </style>
 
 <body>
-<div style="display:inline;"><a href="manage.html"><font size="6"> 後臺管理系統 </font></a></div>
-    <div style="float:right;" style="display:inline;" id="account_text"></div>
+      <div style="display:inline;"><a href="manage.html"><font size="6"> 後臺管理系統 </font></a></div>
+      <div style="float:right;" style="display:inline;" id="account_text"></div>
+
   <form align="center">
         <div onkeydown="enter_search_text()">
             <input type="text" id="search_target">
@@ -30,8 +31,10 @@
         標題
       </th>
 
-      <th width=10% class="source_filter">
-        來源
+      <th width=10%>
+          <select id="source_filter" onChange="change_source_data()">
+            <option>來源</option>
+          </select>
       </th>
 
       <th width=15%>
@@ -102,9 +105,16 @@
           document.getElementById("account_text").innerHTML = "account:"+user_name;
         }
       }
-    $(function () {/*API操作和顯示區*/
+    $(function () {/*API操作和顯示區*/<!--- 初始 -->
       var source_text;
-      source_text = source_data;
+      source_text ="";
+      $.ajax({
+        type: 'get',
+        url: "https://djangotest1156.herokuapp.com/api/RSS/get_source/",
+        success: function (result) {
+            append_dropdown(result);
+        }
+      })
       $.ajax({
         type: 'post',
         url: "https://djangotest1156.herokuapp.com/api/RSS/get_info_for_page/"+"?page=1&source="+source_text,
@@ -123,6 +133,33 @@
         }
       });
     })
+
+      function change_source() {/*API操作和顯示區*/<!--- 初始 -->
+      var source_text;
+      source_text = source_data;
+      clear_table();
+      $.ajax({
+        type: 'post',
+        url: "https://djangotest1156.herokuapp.com/api/RSS/get_info_for_page/"+"?page=1&source="+source_text,
+        data: {
+          "login_hash": final_hash,
+          "account": user_name,
+        },
+        success: function (result) {
+          console.log(result);
+          $.each(result[0], function (index, element) {
+            append_table(element);
+          });
+        },
+        error: function () {
+          alert("錯誤")
+        }
+      });
+    }
+      function change_source_data() {
+      source_data =  $("#source_filter").val();
+      change_source();
+    }
 
     function append_table(data) {
       $('.tab').append(
@@ -241,8 +278,14 @@
         });
     }
     <!--- -------------------------->
-
-
+    function append_dropdown(data) {
+        for (var i = 0;i < data.length;i++){
+          $('#source_filter').append(
+                  $('<option ></option>',
+                     {text:data[i]})
+                  )
+        }
+    }
 
     function Edit_Id(e) {
       let EdId = e.nextSibling;
