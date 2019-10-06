@@ -197,6 +197,15 @@
           call_data(ntpage);
       }
     }
+    function before_clear_table(){
+      if(page != 1){
+        var bfpage;
+        bfpage = page - 1;
+        page = bfpage;
+        $("#tab tr:not(:first)").html("");
+        call_data(bfpage);
+      }
+    }
 
 
       function search_text(e) {
@@ -232,15 +241,7 @@
     }
     <!--- -------------------------->
 
-    function before_clear_table(){
-      if(page != 1){
-        var bfpage;
-        bfpage = page - 1;
-        page = bfpage;
-        $("#tab tr:not(:first)").html("");
-        call_data(bfpage);
-      }
-    }
+
 
     function Edit_Id(e) {
       let EdId = e.nextSibling;

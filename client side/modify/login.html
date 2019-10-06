@@ -33,7 +33,6 @@
         </form>
     </body>
 
-
 <script>
     $("#as").click(function () {
         if ($("#inputaccount").val() == "" || $("#inputPassword").val() == ""){
@@ -75,7 +74,6 @@ function enter() {
             },
             success: function (result) {
                 if (result) {
-                    alert(result)
                     window.location.href = "manage.html?" + result + $("#inputaccount").val();
                 }
                 else {
