@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>來源管理系統</title>
+    <meta charset="utf-8">
+    <link href="manage.css" rel="stylesheet" type="text/css" />
+    <link href="bootstrap.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<style>
+    .tab tr:nth-child(odd) {
+        background: rgb(238, 238, 238)
+    }
+
+    .tab tr:nth-child(even) {
+        background: #FFF
+    }
+
+    .tab tr:hover {
+        background-color: rgb(211, 211, 211);
+    }
+
+    body {
+        font-family: "Microsoft JhengHei UI", cursive;
+    }
+
+    .navbar-brand {
+        font-size: xx-large;
+    }
+</style>
+
+<body>
+    <nav class="navbar ">
+        <a class="navbar-brand" href="manage.html">後臺管理系統</a>
+
+        <div class="mamber">
+            <p id="account">asd</p>
+
+            <a id="logout" href="login.html" onclick=log_out()>登出</a>
+        </div>
+    </nav>
+
+    <nav class="left-bar">
+        <ul>
+            <li>
+                <a href="manage.html">網頁管理</a>
+            </li>
+            <li>
+                <a href="source_manage.html">來源管理</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="text">
+        <div class="search-bar">
+            <input type="button" id="new" onclick=new_source() value="新增"></input>
+
+        </div>
+        <table class="tab" id="tab" border="1" align="center">
+
+            <tr class="ro">
+                <th width=3%>
+                    編號
+                </th>
+                <th width=30%>
+                    來源
+                </th>
+
+                <th width=50%>
+                    網址
+                </th>
+
+
+                <th width=10%>
+
+                </th>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+   <div id="x">
+       <p>
+           背景
+       </p>
+   </div>
+
+</body>
+
+
+<script src="jquery-3.4.1.js"></script>
+<script src="jquery-ui.js"></script>
+<script>
+
+    var test_page = localStorage.getItem("record_page");
+    if (test_page == null) {
+        page = 1;
+    } else {
+        page = parseInt(localStorage.getItem("record_page"));
+    }
+    var source_data = localStorage.getItem("record_source");
+    if (source_data == null) {
+        source_data = "";
+    }
+    var all_page;
+    var final_hash;/*source 要得hash*/
+    var user_name;/*source 要得account*/
+    var local_hash;
+    var url = window.location.search;
+    var hash = url.substr(1);
+    if (hash != "") {
+        if (hash.substr(0, 10) < 0) {
+            localStorage.user = hash;
+            local_hash = localStorage.user;
+            final_hash = local_hash.substr(0, 20);
+            user_name = local_hash.substr(20);
+            document.getElementById("account").innerHTML = user_name;
+        } else {
+            localStorage.user = hash;
+            local_hash = localStorage.user;
+            final_hash = local_hash.substr(0, 19);
+            user_name = local_hash.substr(19);
+            document.getElementById("account").innerHTML = user_name;
+        }
+    } else {
+        local_hash = localStorage.user;
+        if (local_hash.substr(0, 10) < 0) {
+            final_hash = local_hash.substr(0, 20);
+            user_name = local_hash.substr(20);
+            document.getElementById("account").innerHTML = user_name;
+        } else {
+            final_hash = local_hash.substr(0, 19);
+            user_name = local_hash.substr(19);
+            document.getElementById("account").innerHTML = user_name;
+        }
+    }
+
+    $(function () {
+        $.ajax({
+            type: 'post',
+            url: "https://djangotest1156.herokuapp.com/api/RSS/get_source_info/",
+            data: {
+                "login_hash": final_hash,
+                "account": user_name,
+            },
+            success: function (result) {
+                console.log(result);
+                $.each(result, function (index, element) {
+                    append_source_table(element);
+                })
+            },
+            error: function () {
+                alert("錯誤")
+            }
+        });
+    })
+
+
+    function append_source_table(data) {
+        $('.tab').append(
+            $('<tr>').append(
+                $('<td class="number">').append(
+                    $('<p>',
+                        { text: data[0] })
+                ),
+                $('<td class="source">').append(
+                    $('<p>',
+                        { text: data[1] })
+                ),
+                $('<td class="url">').append(
+                    $('<p>',
+                        { text: data[2] })
+                ),
+                $('<td class="edit">').append(
+                    $('<input type="button" onclick="Delete_Id(this)" value="刪除">'),
+                    $('<p>', { text: data[0] })
+                ),
+            )
+        );
+        $("td.edit").children("p").css("display", "none");
+    }
+    function new_source() {
+    window.open ("page.html", "newwindow", "height=200, width=400, top=300, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no")
+    }
+
+    function clear_table() {
+        $("#tab tr:not(:first)").html("");
+    }
+
+    function Delete_Id(e) {
+        let DeId = e.nextSibling;
+        console.log(DeId);
+        var DID = DeId.innerHTML;
+        console.log(DID);
+        Delete_Source(DID);
+    }
+
+    function Delete_Source(DID) {
+        $(function () {
+            console.log(DID);
+            $.ajax({
+                type: 'delete',
+                url: 'https://djangotest1156.herokuapp.com/api/RSS/delete_source/',
+                dataType: 'json',
+                data: {
+                    'id': DID
+                },
+                success: function (result) {
+                    console.log(result);
+                    alert(result + '.已刪除');
+                    window.location.reload()
+                },
+                error: function (xhr) {
+                    alert(xhr)
+                }
+            });
+        })
+    }
+    function log_out() {
+        localStorage.clear();
+    }
+</script>
+
+</html>
