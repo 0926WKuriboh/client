@@ -22,7 +22,7 @@
                     <input  type="password" id="inputPassword" class="form-control_login"  required>
             </div>
 
-            <div class="checkbox mb-3">
+            <div class="mb-3">
                  <input type="checkbox" id="remeber" value="remember-me"> Remember mee
             </div>
 
@@ -55,10 +55,15 @@
                 if (result){
                     if($("#remeber").prop("checked")){
                         document.cookie = "user="+$("#inputaccount").val();
-                        window.location.href="manage.html?"+result+$("#inputaccount").val();
+                        localStorage.user =$("#inputaccount").val();
+                        localStorage.hash =result;
+                        window.location.href="manage.html?"
                     }else{
+
                         document.cookie = "user="+""
-                        window.location.href="manage.html?"+result+$("#inputaccount").val();
+                        localStorage.user =$("#inputaccount").val();
+                        localStorage.hash =result;
+                        window.location.href="manage.html?"
                     }
 
                 }
@@ -88,10 +93,14 @@ function enter() {
                 if (result) {
                     if($("#remeber").prop("checked")){
                         document.cookie = "user="+$("#inputaccount").val();
-                        window.location.href="manage.html?"+result+$("#inputaccount").val();
+                        localStorage.user =$("#inputaccount").val();
+                        localStorage.hash =result;
+                        window.location.href="manage.html?"
                     }else{
                         document.cookie = "user="+""
-                        window.location.href="manage.html?"+result+$("#inputaccount").val();
+                        localStorage.user =$("#inputaccount").val();
+                        localStorage.hash =result;
+                        window.location.href="manage.html?"
                     }
                 }
                 else {

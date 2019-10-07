@@ -1,0 +1,44 @@
+.dlg-no-close {
+    position: absolute;
+    top: 12%;
+    left: 12%;
+    width: 70vw;
+}
+
+#source_name {
+    margin-top: 5%;
+}
+
+
+.search-bar {
+    width: 100%;
+    margin: 5px auto;
+    background-color: gainsboro;
+    padding: 5px 15px;
+}
+
+#new {
+    width: 5%;
+    height: 5vh;
+}
+
+.edit input {
+    width: 50%;
+    margin: 0 25%;
+}
+
+#source_name {
+    width: 25%;
+}
+
+#source_href {
+    width: 50%;
+}
+
+#yes, #no {
+    width: 10%;
+    margin-left: 1%;
+}
+
+
+

@@ -127,7 +127,10 @@ h6 {
     /*color: #b1d3ed;*/
     font-size: 3rem;
     color: whitesmoke;
+}
 
+.navbar-brand:hover {
+    color: whitesmoke;
 }
 
 
@@ -200,3 +203,6 @@ h6 {
     text-decoration: none;
 }
 .ui-widget-header { border: 1px solid #aaaaaa; background-color:red; color: #222222; font-weight: bold; }
+
+
+

@@ -2,10 +2,12 @@
 <html>
 
 <head>
-    <title>來源管理系統</title>
+    <title>來源管理</title>
     <meta charset="utf-8">
-    <link href="manage.css" rel="stylesheet" type="text/css" />
-    <link href="bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="manage.css" rel="stylesheet" type="text/css"/>
+    <link href="bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <link href="source_manage.css" rel="stylesheet" type="text/css">
 </head>
 
 <style>
@@ -22,12 +24,13 @@
     }
 
     body {
-        font-family: "Microsoft JhengHei UI", cursive;
+        font-family: "Microsoft YaHei",cursive;
     }
 
     .navbar-brand {
         font-size: xx-large;
     }
+
 </style>
 
 <body>
@@ -53,10 +56,17 @@
     </nav>
 
     <div class="text">
-        <div class="search-bar">
-            <input type="button" id="new" onclick=new_source() value="新增"></input>
 
+        <div class="search-bar">
+            <input type="button" id="new" value="新增"></input>
+            <div id="add_tab" style="display: none">
+                <input type="text" id="source_name" placeholder="來源名稱">
+                <input type="text" id="source_href" placeholder="來源位址">
+                <input type="button" id="yes" onclick="add_source()" value="確定">
+                <input type="button" id="no" value="取消">
+            </div>
         </div>
+
         <table class="tab" id="tab" border="1" align="center">
 
             <tr class="ro">
@@ -80,19 +90,21 @@
 
         </table>
 
+
     </div>
 
-   <div id="x">
-       <p>
-           背景
-       </p>
-   </div>
+
+    <div id="x">
+        <p>
+            背景
+        </p>
+    </div>
 
 </body>
 
 
 <script src="jquery-3.4.1.js"></script>
-<script src="jquery-ui.js"></script>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <script>
 
     var test_page = localStorage.getItem("record_page");
@@ -105,38 +117,12 @@
     if (source_data == null) {
         source_data = "";
     }
-    var all_page;
     var final_hash;/*source 要得hash*/
     var user_name;/*source 要得account*/
-    var local_hash;
-    var url = window.location.search;
-    var hash = url.substr(1);
-    if (hash != "") {
-        if (hash.substr(0, 10) < 0) {
-            localStorage.user = hash;
-            local_hash = localStorage.user;
-            final_hash = local_hash.substr(0, 20);
-            user_name = local_hash.substr(20);
+
+            final_hash = localStorage.hash;
+            user_name = localStorage.user;
             document.getElementById("account").innerHTML = user_name;
-        } else {
-            localStorage.user = hash;
-            local_hash = localStorage.user;
-            final_hash = local_hash.substr(0, 19);
-            user_name = local_hash.substr(19);
-            document.getElementById("account").innerHTML = user_name;
-        }
-    } else {
-        local_hash = localStorage.user;
-        if (local_hash.substr(0, 10) < 0) {
-            final_hash = local_hash.substr(0, 20);
-            user_name = local_hash.substr(20);
-            document.getElementById("account").innerHTML = user_name;
-        } else {
-            final_hash = local_hash.substr(0, 19);
-            user_name = local_hash.substr(19);
-            document.getElementById("account").innerHTML = user_name;
-        }
-    }
 
     $(function () {
         $.ajax({
@@ -156,35 +142,56 @@
                 alert("錯誤")
             }
         });
-    })
 
+
+        $("#new").click(function () {
+            $("#add_tab").dialog({
+                dialogClass: "dlg-no-close",
+                width: "50%",
+                title: "新增來源",
+                draggable: false,
+                close: function (event, ui) {
+                    location.reload(false);
+                },
+                modal: true,
+
+            });
+        })
+    });
+
+    $("#no").click(function () {
+        $("#add_tab").dialog("close");
+    });
+
+    function new_source() {
+        // window.open("page.html", "newwindow", "height=200, width=400, top=300, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no")
+
+    }
 
     function append_source_table(data) {
         $('.tab').append(
             $('<tr>').append(
                 $('<td class="number">').append(
                     $('<p>',
-                        { text: data[0] })
+                        {text: data[0]})
                 ),
                 $('<td class="source">').append(
                     $('<p>',
-                        { text: data[1] })
+                        {text: data[1]})
                 ),
                 $('<td class="url">').append(
                     $('<p>',
-                        { text: data[2] })
+                        {text: data[2]})
                 ),
                 $('<td class="edit">').append(
                     $('<input type="button" onclick="Delete_Id(this)" value="刪除">'),
-                    $('<p>', { text: data[0] })
+                    $('<p>', {text: data[0]})
                 ),
             )
         );
         $("td.edit").children("p").css("display", "none");
     }
-    function new_source() {
-    window.open ("page.html", "newwindow", "height=200, width=400, top=300, left=500, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no")
-    }
+
 
     function clear_table() {
         $("#tab tr:not(:first)").html("");
@@ -219,9 +226,44 @@
             });
         })
     }
+
     function log_out() {
         localStorage.clear();
     }
+
+    function add_source() {
+        var num = $(".number p");
+        var id = '';
+        for (i=1; i < num.length; i++) {
+            if (i != num[i-1].innerHTML) {
+                id = i;
+                break;
+            }
+        }
+        if (!id) {
+            id = num.length+1;
+        }
+        $.ajax({
+            type: 'post',
+            url: "https://djangotest1156.herokuapp.com/api/RSS/add_source/",
+            data: {
+                "name": $("#source_name").val(),
+                "link": $("#source_href").val(),
+                "id": id
+            },
+            success: function () {
+                alert("新增成功");
+                $("#add_tab").dialog("close");
+                // location.reload(true);
+            },
+            error: function () {
+                alert("新增失敗")
+            }
+        });
+
+
+    }
+
 </script>
 
 </html>

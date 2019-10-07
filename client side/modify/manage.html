@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>test</title>
+    <title>文章管理</title>
     <meta charset="utf-8">
     <link href="manage.css" rel="stylesheet" type="text/css"/>
     <link href="bootstrap.min.css" rel="stylesheet" type="text/css"/>
@@ -19,7 +19,7 @@
         background-color: rgb(211, 211, 211);
     }
     body {
-        font-family: "Microsoft JhengHei UI",cursive;
+        font-family: "Microsoft YaHei",cursive;
     }
     .navbar-brand {
         font-size: xx-large;
@@ -123,35 +123,10 @@
     var all_page;
     var final_hash;
     var user_name;
-    var local_hash;
-    var url = window.location.search;
-    var hash = url.substr(1);
-    if (hash != "") {
-        if (hash.substr(0, 10) < 0) {
-            localStorage.user = hash;
-            local_hash = localStorage.user;
-            final_hash = local_hash.substr(0, 20);
-            user_name = local_hash.substr(20);
+
+            final_hash = localStorage.hash;
+            user_name =localStorage.user;
             document.getElementById("account").innerHTML = user_name;
-        } else {
-            localStorage.user = hash;
-            local_hash = localStorage.user;
-            final_hash = local_hash.substr(0, 19);
-            user_name = local_hash.substr(19);
-            document.getElementById("account").innerHTML = user_name;
-        }
-    } else {
-        local_hash = localStorage.user;
-        if (local_hash.substr(0, 10) < 0) {
-            final_hash = local_hash.substr(0, 20);
-            user_name = local_hash.substr(20);
-            document.getElementById("account").innerHTML = user_name;
-        } else {
-            final_hash = local_hash.substr(0, 19);
-            user_name = local_hash.substr(19);
-            document.getElementById("account").innerHTML = user_name;
-        }
-    }
     $(function () {/*API操作和顯示區*/<!--- 初始 -->
         var source_text;
         source_text = source_data;
