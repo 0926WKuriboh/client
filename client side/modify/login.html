@@ -27,57 +27,66 @@
             </div>
 
             <div>
-                <button class="btn btn-lg btn-primary btn-block" type="button" id="as">Login</button>
+                <button class="btn btn-lg btn-primary btn-block" type="button" id="as" onclick=login()>Login</button>
             </div>
         </form>
     </body>
 
 
 <script>
-    var remeber_account;
+    var record_cookie;
     var remeber_account_text;
-    remeber_account = document.cookie;
-    remeber_account_text = remeber_account.substr(5);
-    $("#inputaccount").val(remeber_account_text);
-    $("#as").click(function () {
-        if ($("#inputaccount").val() == "" || $("#inputPassword").val() == ""){
-            alert("帳號密碼不可為空！！")
+    remeber_account_text = localStorage.remeber;
+    <!---$("#inputaccount").val(remeber_account_text); -->
+    var account;
+    var password;
+    check_login();
+    function  login() {
+            account  = $("#inputaccount").val();
+            password =$("#inputPassword").val();
+        if ($("#inputaccount").val() == "" || $("#inputPassword").val() == "") {
+                alert("帳號密碼不可為空！！")
             return
         }
         $.ajax({
             type: 'post',
             url: 'https://djangotest1156.herokuapp.com/api/RSS/login/',
             data: {
-                "account": $("#inputaccount").val(),
-                "password": $("#inputPassword").val()
+                "account": account,
+                "password": password
             },
             success: function (result) {
-                if (result){
-                    if($("#remeber").prop("checked")){
-                        document.cookie = "user="+$("#inputaccount").val();
-                        localStorage.user =$("#inputaccount").val();
-                        localStorage.hash =result;
-                        window.location.href="manage.html?"
-                    }else{
+                if (result) {
+                    if ($("#remeber").prop("checked")) {
+                        localStorage.remeber = account;
+                        localStorage.user = account;
+                        localStorage.password = password;
+                        localStorage.hash = result;
+                        expiry_date();
+                        window.location.href = "manage.html?"
+                    } else {
 
-                        document.cookie = "user="+""
-                        localStorage.user =$("#inputaccount").val();
-                        localStorage.hash =result;
-                        window.location.href="manage.html?"
+                        localStorage.remeber = "";
+                        localStorage.user = account;
+                        localStorage.password = password;
+                        localStorage.hash = result;
+                        expiry_date();
+                        window.location.href = "manage.html?"
                     }
 
-                }
-                else {
-                        alert("登入失敗")
+                } else {
+                    alert("登入失敗")
                 }
             },
             error: function () {
                 alert("連接錯誤")
             }
         });
-    });
-function enter() {
+    }
+    function enter() {
     if(event.keyCode ==13) {
+            account  = $("#inputaccount").val();
+            password =$("#inputPassword").val();
             if ($("#inputaccount").val() == "" || $("#inputPassword").val() == "") {
                 alert("帳號密碼不可為空！！")
                 return
@@ -86,20 +95,24 @@ function enter() {
             type: 'post',
             url: 'https://djangotest1156.herokuapp.com/api/RSS/login/',
             data: {
-                "account": $("#inputaccount").val(),
-                "password": $("#inputPassword").val()
+                "account": account,
+                "password": password
             },
             success: function (result) {
                 if (result) {
                     if($("#remeber").prop("checked")){
-                        document.cookie = "user="+$("#inputaccount").val();
-                        localStorage.user =$("#inputaccount").val();
+                        localStorage.remeber = account;
+                        localStorage.user = account;
+                        localStorage.password = password;
                         localStorage.hash =result;
+                        expiry_date();
                         window.location.href="manage.html?"
                     }else{
-                        document.cookie = "user="+""
-                        localStorage.user =$("#inputaccount").val();
+                        localStorage.remeber = "";
+                        localStorage.user = account;
+                        localStorage.password = password;
                         localStorage.hash =result;
+                        expiry_date();
                         window.location.href="manage.html?"
                     }
                 }
@@ -113,6 +126,54 @@ function enter() {
         });
     }
 }
+
+function expiry_date() {
+        var expire_days = 1; // 過期日期(天)
+        var d = new Date();
+        d.setTime(d.getTime() + (expire_days * 10 * 60 * 1000));
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = "expire_days=ten_minute" + "; " + expires + ";"
+}
+function check_login() {
+        record_cookie = document.cookie;
+    if(record_cookie === "expire_days=ten_minute"){
+        login_yes();
+    }
+}
+function login_yes() {
+        var login_account;
+        var login_password;
+        login_account = localStorage.user;
+        login_password = localStorage.password;
+    $.ajax({
+            type: 'post',
+            url: 'https://djangotest1156.herokuapp.com/api/RSS/login/',
+            data: {
+                "account": login_account,
+                "password": login_password
+            },
+            success: function (result) {
+                if (result) {
+                    if ($("#remeber").prop("checked")) {
+                        localStorage.remeber = account;
+                        localStorage.hash = result;
+                        window.location.href = "manage.html?"
+                    } else {
+                        localStorage.remeber = "";
+                        localStorage.hash = result;
+                        window.location.href = "manage.html?"
+                    }
+                } else {
+                    alert("登入失敗")
+                }
+            },
+            error: function () {
+                alert("連接錯誤")
+            }
+        });
+}
+
+
 </script>
 </html>
 
