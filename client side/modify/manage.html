@@ -57,7 +57,7 @@
         <div class="search-bar">
             <div onkeydown="enter_search_text()">
                 <input type="text" id="search_target" placeholder="輸入關鍵字">
-                <input type="button" value="搜尋" onclick="search_text()">
+                <input type="button" value="搜尋" onclick="search_text(this)">
             </div>
         </div>
 
@@ -96,10 +96,13 @@
 
         <table>
             <tr>
-                <p align="center">
-                    <input type="button" onclick="before_clear_table()" id="leftButton" value="before" ></input>
-                    <input type="button" onclick="next_clear_table()" id="rightButton" value="next" ></input>
-                </p>
+                <td align="right"><input type="button" onclick="before_clear_table()" id="leftButton" value="before" >
+                </td>
+                        <td align="center"><div onkeydown="search_page()">
+                                <input type="text" id="search_page">
+                        </div></td>
+                <td><input type="button" onclick="next_clear_table()" id="rightButton" value="next" >
+                </td>
             </tr>
         </table>
     </div>
@@ -123,10 +126,6 @@
     var all_page;
     var final_hash;
     var user_name;
-
-
-
-
 
             final_hash = localStorage.hash;
             user_name =localStorage.user;
@@ -226,6 +225,7 @@
         $("td.edit").children("p").css("display", "none");
     }
     function call_data(num) {
+        page =parseInt(page);
         var source_call;
         source_call = source_data;
         $.ajax({
@@ -294,6 +294,19 @@
             }
         });
     }
+
+    function search_page() {
+        if (event.keyCode == 13) {
+            page = $("#search_page").val();
+            if (page <= all_page) {
+                clear_table();
+                call_data(page);
+                $("#search_page").val("");
+            }
+        }
+    }
+
+
     function append_dropdown(data) {
         for (var i = 0; i < data.length; i++) {
             $('#source_filter').append(
@@ -339,7 +352,13 @@
         })
     }
     function log_out() {
+        var expire_days = 1; // 過期日期(天)
+        var d = new Date();
+        d.setTime(d.getTime() - (expire_days * 10 * 60 * 1000));
+        var expires = "expires=" + d.toGMTString();
+        document.cookie = "expire_days=ten_minute" + "; " + expires + ";"
         localStorage.clear();
+
     }
 </script>
 </html>
