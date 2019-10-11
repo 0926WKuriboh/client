@@ -6,17 +6,20 @@
     <meta charset="utf-8">
     <link href="manage.css" rel="stylesheet" type="text/css"/>
     <link href="bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css"> -->
+    <link href="jquery-ui.css" rel="stylesheet" type="text/css">
     <link href="source_manage.css" rel="stylesheet" type="text/css">
 </head>
 
 <style>
     .tab tr:nth-child(odd) {
-        background: rgb(238, 238, 238)
+        /*background: rgb(238, 238, 238)*/
+        height: 8vh;
     }
 
     .tab tr:nth-child(even) {
-        background: #FFF
+        /*background: #FFF*/
+        height: 8vh;
     }
 
     .tab tr:hover {
@@ -34,7 +37,7 @@
 </style>
 
 <body>
-    <nav class="navbar ">
+    <nav class="navbar">
         <a class="navbar-brand" href="manage.html">後臺管理系統</a>
 
         <div class="mamber">
@@ -56,9 +59,9 @@
     </nav>
 
     <div class="text">
-
+        <h2>來源管理</h2>
         <div class="search-bar">
-            <input type="button" id="new" value="新增"></input>
+            <input type="button" id="new" value="新增">
             <div id="add_tab" style="display: none">
                 <input type="text" id="source_name" placeholder="來源名稱">
                 <input type="text" id="source_href" placeholder="來源位址">
@@ -67,9 +70,9 @@
             </div>
         </div>
 
-        <table class="tab" id="tab" border="1" align="center">
+        <table class="tab" id="tab" align="center" rules="rows">
 
-            <tr class="ro">
+            <tr class="ro" id="table-first">
                 <th width=3%>
                     編號
                 </th>
@@ -104,7 +107,8 @@
 
 
 <script src="jquery-3.4.1.js"></script>
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<!-- <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script> -->
+<script src="jquery-ui.js"></script>
 <script>
 
     var test_page = localStorage.getItem("record_page");
@@ -171,11 +175,11 @@
     function append_source_table(data) {
         $('.tab').append(
             $('<tr>').append(
-                $('<td class="number">').append(
+                $('<td class="number" style="text-align: center">').append(
                     $('<p>',
                         {text: data[0]})
                 ),
-                $('<td class="source">').append(
+                $('<td class="source" style="text-align: center">').append(
                     $('<p>',
                         {text: data[1]})
                 ),

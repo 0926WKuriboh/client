@@ -1,0 +1,284 @@
+body {
+    background-color: rgb(219, 219, 219);
+}
+
+
+
+.navbar {
+    display: flow-root;
+    background-color: white;
+    /*box-shadow: 1px 1px 3px 1px gray;*/
+    box-shadow: 1px 1px 15px -10px rgba(255, 25, 31, 0.97);
+}
+
+.navbar-brand {
+    /*color: #b1d3ed;*/
+    font-size: 3rem;
+    /*color: #67c8ff;*/
+    color: rgba(255, 25, 31, 0.97);
+}
+
+.navbar-brand:hover {
+    /*color: #67c8ff;*/
+    color: rgba(255, 25, 31, 0.97);
+}
+
+.mamber {
+    float: right;
+    margin-top: 10px;
+    /*color: #4896e2;*/
+    color: rgba(255, 25, 31, 0.97);
+    vertical-align: bottom;
+}
+
+#account {
+    float: left;
+    width: 120px;
+    margin-bottom: 0;
+    margin-right: 10px;
+
+}
+
+#logout {
+    /*color: #4896e2;*/
+    color: rgba(255, 25, 31, 0.97);
+    float: left;
+}
+
+
+.search-bar div {
+    width: 100%;
+    margin: 0 1%;
+    /*background: rgb(238, 238, 238);*/
+    /*padding: 5px 15px;*/
+}
+
+/*.input-keydown {*/
+/*    margin-left: 0;*/
+/*    padding: 0;*/
+/*}*/
+
+.search-bar input {
+    height: 35px;
+}
+
+#source_filter {
+    width: 85%;
+    background-color: rgb(238, 238, 238);
+    border-color: rgb(216, 216, 216);
+    border-radius: 3px;
+    height: 120%;
+}
+
+.text h2 {
+    margin:2% 2% 2%;
+
+}
+
+
+#search_target {
+    width: 25%;
+    border: none;
+}
+
+#search_target:focus {
+    outline: none;
+}
+
+#search-button {
+    width: 5%;
+}
+
+.left-bar {
+    width: 12%;
+    height: 100vw;
+    /*position: absolute;*/
+    float: left;
+    border-right: 1px rgba(192, 192, 192, 0.81) solid;
+
+
+    background-color: rgba(247, 247, 247, 0.85);
+
+}
+
+.left-bar ul {
+    list-style-type: none;
+    padding-left: 15%;
+    padding-top: 10%;
+}
+
+.left-bar li {
+    margin: 15% auto;
+}
+
+.left-bar a {
+    color: darkgray;
+    font-size: 140%;
+}
+
+.left-bar a:hover {
+    color: darkgray;
+    text-decoration: none;
+}
+
+
+.text {
+    margin: 0 0 auto;
+    float: left;
+    width: 88%;
+    color: black;
+}
+
+/* .text div {
+    background-image: url("32d6d04ecabf5a116432f2e4586a021b.jpg");
+} */
+
+
+
+/*#seperate-search-table {*/
+/*    border:none;*/
+/*    margin: 1px 2%;*/
+/*    width: 100%;*/
+/*    height: 2px;*/
+/*    background-color: red;*/
+/*}*/
+
+#first-table  {
+    height: 20vh;
+}
+
+.append-data {
+    width: 20vh;
+}
+
+table {
+    /*background-color: rgb(255, 255, 255);*/
+    /*border-color: whitesmoke;*/
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 0;
+    word-wrap: break-word;
+    table-layout: fixed;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-color: rgba(192, 192, 192, 0.81);
+}
+
+#table-first {
+    /*background-color: rgb(219, 219, 219);*/
+    text-align: center;
+}
+
+
+.display_filter {
+    cursor: pointer;
+}
+
+
+p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+h6 {
+    color: white;
+    margin: 0px 0px 0px 0px;
+}
+
+.button {
+    margin: 5px;
+    width: 50px;
+    height: 24px;
+
+}
+
+.id {
+    padding: 10px;
+    font-size: 17px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
+}
+
+.title {
+    padding: 10px;
+    width: 35%;
+    font-size: 17px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.source {
+    padding: 10px;
+    width: 10%;
+    font-size: 17px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.category {
+    padding: 10px;
+    width: 20%;
+    font-size: 17px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.tag {
+    padding: 10px;
+    width: 15%;
+    font-size: 17px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.display {
+    width: 6%;
+    font-size: 17px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.delete {
+    font-size: 17px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.edit {
+    width: 7%;
+    font-size: 17px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.ui-widget-header { border: 1px solid #aaaaaa; background-color:red; color: #222222; font-weight: bold; }
+
+.page-table {
+    width: 20%;
+    margin: 1% auto;
+}
+
+
+.page-table input {
+    width: 70%;
+    margin-right: 10%;
+}
+
+.page-table div {
+    margin-right: 0;
+}
+
+#search-page {
+    width: 40%;
+}

@@ -1,7 +1,7 @@
 .dlg-no-close {
     position: absolute;
-    top: 12%;
-    left: 12%;
+    top: 11%;
+    left: 13%;
     width: 70vw;
 }
 
@@ -10,16 +10,19 @@
 }
 
 
-.search-bar {
-    width: 100%;
-    margin: 5px auto;
-    background-color: gainsboro;
-    padding: 5px 15px;
-}
+/*.search-bar {*/
+/*    width: 100%;*/
+/*    margin: 5px auto;*/
+/*    background-color: gainsboro;*/
+/*    padding: 5px 15px;*/
+/*}*/
+
 
 #new {
     width: 5%;
-    height: 5vh;
+    height: 35px;
+    float: right;
+    margin-right: 3%;
 }
 
 .edit input {
@@ -40,5 +43,7 @@
     margin-left: 1%;
 }
 
-
+.url p{
+    margin-left: 10%;
+}
 
