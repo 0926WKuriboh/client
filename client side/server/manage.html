@@ -366,11 +366,8 @@
         var EID = EdId.innerHTML;
         var edisplay = Eddisplay.innerHTML;
 
-        alert(EID);
-        alert(edisplay);
-
         $.ajax({
-            type:'post',
+            type:'put',
             url: 'https://djangotest1156.herokuapp.com/api/RSS/change_display/',
             data:{
                 "id":EID,
