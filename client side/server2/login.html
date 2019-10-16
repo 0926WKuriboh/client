@@ -6,7 +6,9 @@
         <script src="jquery-3.4.1.js"></script>
         <link href="floating-labels.css" rel="stylesheet">
 </head>
+
     <body onkeydown="enter()">
+    <div id="loader"></div>
         <form class="form-signin">
             <div class="text-center mb-4">
                 <h1 class="h3 mb-3 font-weight-normal">登入</h1>
@@ -56,6 +58,7 @@
                 "password": password
             },
             success: function (result) {
+                myFunction();
                 if (result) {
                     if ($("#remeber").prop("checked")) {
                         localStorage.remeber = account;
@@ -83,6 +86,7 @@
             }
         });
     }
+
     function enter() {
     if(event.keyCode ===13) {
             account  = $("#inputaccount").val();
@@ -99,6 +103,7 @@
                 "password": password
             },
             success: function (result) {
+                myFunction();
                 if (result) {
                     if($("#remeber").prop("checked")){
                         localStorage.remeber = account;
@@ -128,9 +133,9 @@
 }
 
 function expiry_date() {
-        var expire_days = 1; // 過期日期(天)
+        var expire_days = 10; // 過期日期(分)
         var d = new Date();
-        d.setTime(d.getTime() + (expire_days * 10 * 60 * 1000));
+        d.setTime(d.getTime() + (expire_days  * 60 * 1000));
         var expires = "expires=" + d.toGMTString();
         document.cookie = "expire_days=ten_minute" + "; " + expires + ";"
 }
@@ -172,6 +177,19 @@ function login_yes() {
             }
         });
 }
+
+
+
+
+var myVar;
+function myFunction() {
+    $("#loader").css('display','block');
+  myVar = setTimeout(showPage, 1500);
+}
+function showPage() {
+    document.getElementById("loader").style.display = "none";
+}
+
 
 
 </script>

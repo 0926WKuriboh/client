@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <input type="text" id="source_name" placeholder="來源名稱">
+    <input type="text" id="source_href" placeholder="來源位址">
+    <input type="button" id="yes" onclick="add_source()" value="確定">
+    <input type="button" id="no" onclick="cancel()" value="取消">
+
+</body>
+<script src="jquery-3.4.1.js"></script>
+<script>
+    function add_source() {
+        $.ajax({
+            type: 'post',
+            url: "https://djangotest1156.herokuapp.com/api/RSS/add_source/",
+            data: {
+                "name": $("#source_name").val(),
+                "link": $("#source_href").val()
+            },
+            success: function () {
+                alert("新增成功")
+                window.close();
+                window.opener.location.reload();
+            },
+            error: function () {
+                alert("新增失敗")
+            }
+        });
+
+
+    }
+
+    function cancel() {
+        window.close();
+    }
+
+</script>
+</html>

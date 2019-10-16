@@ -3,6 +3,19 @@ body {
 }
 
 
+a.navbar-brand{
+    font-size: xx-large;
+}
+
+
+input[type=button] {
+    color: rgba(255, 25, 31, 0.97);
+    background-color:whitesmoke;
+    border: 0;
+    border-radius: 15%;
+    opacity:0.8;
+}
+
 
 .navbar {
     display: flow-root;
@@ -59,7 +72,7 @@ body {
 /*}*/
 
 .search-bar input {
-    height: 35px;
+    height: 55px;
 }
 
 #source_filter {
@@ -91,7 +104,7 @@ body {
 
 .left-bar {
     width: 12%;
-    height: 100vw;
+    height: 100vh;
     /*position: absolute;*/
     float: left;
     border-right: 1px rgba(192, 192, 192, 0.81) solid;
@@ -147,10 +160,6 @@ body {
     height: 20vh;
 }
 
-.append-data {
-    width: 20vh;
-}
-
 table {
     /*background-color: rgb(255, 255, 255);*/
     /*border-color: whitesmoke;*/
@@ -172,7 +181,7 @@ table {
 
 
 .display_filter {
-    cursor: pointer;
+    /* cursor: pointer; */
 }
 
 
@@ -184,16 +193,24 @@ p {
 
 h6 {
     color: white;
-    margin: 0px 0px 0px 0px;
+    margin: 0;
 }
 
 .button {
     margin: 5px;
     width: 50px;
     height: 24px;
-
 }
 
+.append-data td {
+    padding: 0;
+}
+
+.append-data p {
+    margin: 5% auto ;
+}
+
+/* 
 .id {
     padding: 10px;
     font-size: 17px;
@@ -220,6 +237,8 @@ h6 {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+
 
 .category {
     padding: 10px;
@@ -260,7 +279,46 @@ h6 {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+} */
+
+.edit-area {
+    height: 12vh;
+    width: 100%;
 }
+
+
+.edit input {
+    height: 5vh;
+    margin: 0 5%;
+    width: 150px;
+}
+
+.edit-area {
+    display: none;
+}
+.edit-area button {
+    height: 5vh;
+    width: 5%;
+    margin: 0 5%;
+    color: rgba(255, 25, 31, 0.97);
+    background-color:whitesmoke;
+    border: 0;
+    border-radius: 15%;
+    opacity:0.8;
+
+}
+
+.edit-area label{
+    width: 45px;
+    margin-left: 3%;
+}
+
+.edit-area input {
+    margin: 1% 0;
+    width: 40%;
+}
+
+
 
 .ui-widget-header { border: 1px solid #aaaaaa; background-color:red; color: #222222; font-weight: bold; }
 
@@ -279,6 +337,14 @@ h6 {
     margin-right: 0;
 }
 
-#search-page {
-    width: 40%;
+hr {
+    margin-top: 0;
 }
+
+#search-page {
+    width: 40px;
+}
+
+
+
+
