@@ -120,9 +120,8 @@
 <script src="jquery-3.4.1.js"></script>
 
 <script>
-    if(document.cookie != "expire_days=ten_minute"){
-        $("#logout").click();
-    }
+    var x = document.cookie.indexOf("expire_days=");
+
 
     var test_page = localStorage.getItem("record_page");
     if (test_page == null) {
@@ -142,8 +141,15 @@
     user_name = localStorage.user;
     document.getElementById("account").innerHTML = user_name;
 
+    if(x == -1){
+        $("#logout").click();
+        window.location.href = "login.html";
+    }else{
+        start();
+    }
 
-    $(function () {                 //<!-- 初始 -->
+
+    function start() {                 //<!-- 初始 -->
         var source_text;
         source_text = source_data;
         $.ajax({
@@ -176,7 +182,7 @@
                 alert("錯誤")
             }
         });
-    });
+    }
 
     function enter_search_text() {
         if (event.keyCode === 13) {
